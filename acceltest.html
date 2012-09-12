@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Accelerometer Javascript Test</title>
+<meta name=viewport content="width=device-width,user-scalable=yes"/>
+</head>
+<body>
+<div id=content>
+<ul>
+<li>acceleration x: <span id=accelerationX></span>g</li>
+<li>acceleration y: <span id=accelerationY></span>g</li>
+<li>acceleration z: <span id=accelerationZ></span>g</li>
+<li>rotation alpha: <span id=rotationAlpha></span>degree</li>
+<li>rotation beta: <span id=rotationBeta></span>degree</li>
+<li>rotation gamma: <span id=rotationGamma></span>degree</li>
+</ul>
+</div>
+<script type="text/javascript">
+//source: http://albertosarullo.com/demos/accelerometer/
+var last_event;
+if(window.DeviceMotionEvent!=undefined){
+	window.ondevicemotion=function(e){
+		last_event=e;
+	}
+}
+
+setInterval(function(){
+	if(!last_event) return;
+	accel=last_event.accelerationIncludingGravity;
+	rotat=last_event.rotationRate;
+	document.getElementById("accelerationX").innerHTML=Math.round(accel.x*1000)/1000;
+	document.getElementById("accelerationY").innerHTML=Math.round(accel.y*1000)/1000;
+	document.getElementById("accelerationZ").innerHTML=Math.round(accel.z*1000)/1000;
+	if(rotat){
+		document.getElementById("rotationAlpha").innerHTML=Math.round(rotat.alpha*1000)/1000;
+		document.getElementById("rotationBeta").innerHTML=Math.round(rotat.beta*1000)/1000;
+		document.getElementById("rotationGamma").innerHTML=Math.round(rotat.gamma*1000)/1000;
+	}
+}, 1000);
+</script>
+</body>
+</html>
