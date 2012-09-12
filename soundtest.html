@@ -1,0 +1,17 @@
+<html><head><title>sound test</title>
+<script>
+//sources
+//http://www.w3schools.com/jsref/event_onclick.asp
+//http://stackoverflow.com/questions/1933969/sound-effects-in-javascript-html5
+var kickdrum1 = new Audio("kickdrum1.ogg"); // buffers automatically when created
+var biggong = new Audio("biggong.ogg"); 
+
+function playwav(audio_element)
+{
+audio_element.play();
+}
+</script>
+<head>
+<button onclick="playwav(kickdrum1)">play kickdrum1</button>
+<button onclick="playwav(biggong)">play biggong</button>
+</html>
