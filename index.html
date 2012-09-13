@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="user-scalable=no,">
+	<title>Dream Machine</title> 
+	<link rel="StyleSheet" href="style.css" type="text/css" media="screen">
+</head>
+
+<body>
+
+<div id="projectname"></div>
+
+<div id="play_button_container">
+	<table style="font:0.8em arial,sans-serif; border-size:0px; padding:0px;">
+		<tr>
+			<td></td><td></td>
+			<td id="instr_name_up" style="vertical-align: bottom; text-align:center;"></td>
+			<td></td><td></td>
+			</tr>
+		<tr>
+			<td></td><td></td>
+			<td style="vertical-align: bottom; text-align:center; width:50px; height:80px;">
+				<div class="play_button" id="play-up" onclick="on_playSound('up')"></div></td>
+			<td></td><td></td>
+			</tr>
+		<tr>
+			<td id="instr_name_left" style="text-align:right;">.</td>
+			<td style="text-align:right; height:50px; width:80px;">
+				<div class="play_button" id="play-left" onclick="on_playSound('right')"></div></td>
+			<td style="width:50px; height:50px; background-color:lightgray;"></td>
+			<td style="text-align:left; height:50px; width:80px;">
+				<div class="play_button" id="play-right" onclick="on_playSound('left')"></div></td>
+			<td id="instr_name_right"></td>
+			</tr>
+		<tr>
+			<td></td><td></td>
+			<td style="vertical-align: top; text-align:center; height:80px;">
+				<div class="play_button" id="play-down" onclick="on_playSound('down')"></div></td>
+			<td></td><td></td>
+			</tr>
+		<tr>
+			<td></td><td></td>
+			<td id="instr_name_down" style="vertical-align: top; text-align:center;"></td>
+			<td></td><td></td>
+			</tr>
+	</table>
+</div>
+
+<div id="selectKit">
+	Select kit:<br/>
+	<select onchange="selectKit(this)" id="kitSelector">
+	  <option value="1">Basics</option>
+	  <option value="2">Conga+Cuica</option>
+	</select>
+</div>
+
+<div class="helpButton" id="helpDetails">
+<b>Looking for help?:</b><br/><br/>
+
+Setting tempo:<ul>
+<li>Click tempo button</li>
+<li>Either <i>shake your device</i> or <i>click the beat button</i> repeatedly to the desired tempo.</li>
+</ul>
+
+</pre>
+<b><a href="#" onclick="closeHelp()"> Got it! </a></b><br/><br/><br/>
+</div>
+
+<div class="helpButton" onclick="showHelp();"> Help </div>
+
+<div class="state_button" id="button_tempo" onclick="tempoClick()">
+	<div class="button_text" id="tempo_text"> Tempo </div>
+</div>
+
+<div class="step_button step_button_em" id="step_0">1</div>
+<div class="step_button" id="step_1">2</div>
+<div class="step_button" id="step_2">3</div>
+<div class="step_button" id="step_3">4</div>
+<div class="step_button step_button_em" id="step_4">5</div>
+<div class="step_button" id="step_5">6</div>
+<div class="step_button" id="step_6">7</div>
+<div class="step_button" id="step_7">8</div>
+<div class="step_button step_button_em" id="step_8">9</div>
+<div class="step_button" id="step_9">10</div>
+<div class="step_button" id="step_10">11</div>
+<div class="step_button" id="step_11">12</div>
+<div class="step_button step_button_em" id="step_12">13</div>
+<div class="step_button" id="step_13">14</div>
+<div class="step_button" id="step_14">15</div>
+<div class="step_button" id="step_15">16</div>
+
+<div class="state_button" id="button_record" onclick="recordClick()">
+	<div class="button_text"> Record </div>
+</div>
+
+
+<div class="state_button" id="button_clear" onclick="resetClick()">
+	<div class="button_text"> Reset </div>
+</div>
+
+<div class="beat_button" id="tempoSetter" onclick="temmpooo()">
+	<div> The Beat! </div>
+</div>
+
+<div class="beat_button subbeat" id="tempoMult" onclick="tempoMultiply()"><div> x2 </div></div>
+<div class="beat_button subbeat" id="tempoDiv" onclick="tempoDivide()"><div> /2 </div></div>
+
+
+<div id="footer">
+	Dream Machine (<a href="http://www.youtube.com/watch?v=VdAgj34G4tg">*</a>) is a mobile HTML5 / Javascript / CSS3 experiment for devices supporting accelerometer and audio. Built by Darren and Adil. Hosted on <a href="https://github.com/darrenks/Dream-Machine">github</a>.
+	For <a href="http://cmsc838f-f12.wikispaces.com/"> more</a>.
+<!-- Works best on XX browser on XX device. Drum set courtesy of http://www.freesound.org/people/billengholm@yahoo.com/packs/5966/ -->
+</div>
+
+<script>
+
+// keeps track of the tempo clicks
+var clickTable = new Array();
+var lastClick = 0;
+
+// program state
+var readTempo = false;
+
+// bpm and basic beat management
+var bpm = 0;
+var bpm_inv = 0;
+var beatHandle;
+var curStep = 0;
+
+var soundMapping = new Array();
+
+// recorded instruments
+var instr = new Array();
+instr["kickdrum1"] = new Array();
+instr["kickdrum1"][0] = 1;
+instr["kickdrum1"][4] = 1;
+instr["kickdrum1"][8] = 1;
+instr["kickdrum1"][12] = 1;
+instr["openhihat"] = new Array();
+instr["openhihat"][14] = 1;
+instr["closedhihat"] = new Array();
+instr["closedhihat"][0] = 1;
+instr["closedhihat"][2] = 1;
+instr["closedhihat"][4] = 1;
+instr["closedhihat"][6] = 1;
+instr["closedhihat"][8] = 1;
+instr["closedhihat"][10] = 1;
+instr["closedhihat"][12] = 1;
+
+var clips = new Array();
+
+var supportOgg = new Audio().canPlayType("audio/ogg");
+var supportMp3 = new Audio().canPlayType("audio/mpeg");
+
+function addClip(clipname){
+	clips[clipname] = new Audio();
+//	clips[clipname].preload = "none";
+	if(supportOgg) clips[clipname].src = "kit1/"+clipname+".ogg";
+	else if(supportMp3) clips[clipname].src = "kit1/"+clipname+".mp3";
+}
+
+addClip("kickdrum1");
+addClip("openhihat");
+addClip("closedhihat");
+addClip("cowbell");
+addClip("lowconga");
+addClip("openhighconga");
+addClip("mutecuica");
+addClip("opencuica");
+
+var beatie = false;
+function beatFeed(){
+	document.getElementById("step_"+curStep).style.background = 'lightgray';
+	curStep++;
+	if(curStep==16) curStep = 0; // wrap
+	if(curStep%4==0){
+		if(beatie){
+			document.getElementById("tempoSetter").style.background = 'red';
+		} else {
+			document.getElementById("tempoSetter").style.background = 'blue';
+		}
+		beatie = !beatie;
+	}
+	document.getElementById("step_"+curStep).style.background = 'darkgray';
+	if(instr["kickdrum1"][curStep]==1){
+		clips["kickdrum1"].play();
+		clips["kickdrum1"].currentTime = 0;
+	}
+	if(instr["closedhihat"][curStep]==1){
+		clips["openhihat"].pause();
+		clips["closedhihat"].play();
+		clips["closedhihat"].currentTime = 0;
+	}
+	if(instr["openhihat"][curStep]==1){
+		clips["closedhihat"].pause();
+		clips["openhihat"].play();
+		clips["openhihat"].currentTime = 0;
+	}
+}
+
+function updatebpm(newbpm){
+	if(newbpm==0) return;
+	bpm = newbpm;
+	bpm_inv = 60000 / bpm;
+	document.getElementById("tempo_text").innerHTML = "Tempo: " + (Math.round(bpm*10)/10) + " bpm";
+}
+
+function tempoClick() {
+	if(readTempo){
+		readTempo = false;
+		document.getElementById("button_tempo").style.background = 'lightgreen';
+		beatHandle = setInterval("beatFeed()", bpm_inv/4);
+	} else {
+		readTempo = true;
+		document.getElementById("button_tempo").style.background = 'red';
+		lastClick = 0;
+	}
+} 
+
+function recordClick() {
+} 
+
+function resetClick() {
+	window.clearTimeout(beatHandle);
+	document.getElementById("tempoSetter").style.background = 'lightblue';
+}
+  
+function temmpooo(){
+	// need to be in read tempo mode
+	if(!readTempo) return;
+	clickTable[lastClick] = new Date().getTime();
+	lastClick++;
+	if(lastClick>1){
+		bpm_inv = 0;
+		var firstIndex = 1;
+		if(lastClick>5) firstIndex = lastClick - 5;
+		for(var i=firstIndex ; i<lastClick; i++){
+			bpm_inv += clickTable[i] - clickTable[i-1];
+		}
+		bpm_inv = bpm_inv / (lastClick-firstIndex);
+		updatebpm(60000 / bpm_inv);
+	}
+}
+function tempoMultiply(){
+	updatebpm(bpm*2);
+	window.clearTimeout(beatHandle);
+	beatHandle = setInterval("beatFeed()", bpm_inv/4);
+}
+function tempoDivide(){
+	updatebpm(bpm/2);
+	window.clearTimeout(beatHandle);
+	beatHandle = setInterval("beatFeed()", bpm_inv/4);
+}
+
+function on_playSound(name){
+	clips[ soundMapping[name] ].play();
+	clips[ soundMapping[name] ].currentTime = 0;
+}
+
+function selectKit(sel){
+	if(document.getElementById("kitSelector").selectedIndex==0){
+		soundMapping['left'] = 'closedhihat';
+		soundMapping['right'] = 'openhihat';
+		soundMapping['up'] = 'kickdrum1';
+		soundMapping['down'] = 'cowbell';
+
+		document.getElementById("instr_name_left").innerHTML = "ClosedHiHat";
+		document.getElementById("instr_name_right").innerHTML = "OpenHiHat";
+		document.getElementById("instr_name_up").innerHTML = "Kick";
+		document.getElementById("instr_name_down").innerHTML = "Cowbell";
+	} else {
+		soundMapping['left'] = 'opencuica';
+		soundMapping['right'] = 'mutecuica';
+		soundMapping['up'] = 'lowconga';
+		soundMapping['down'] = 'openhighconga';
+
+		document.getElementById("instr_name_left").innerHTML = "Open Cuica";
+		document.getElementById("instr_name_right").innerHTML = "Mute Cuica";
+		document.getElementById("instr_name_up").innerHTML = "Low Conga";
+		document.getElementById("instr_name_down").innerHTML = "High Conga";
+	}
+}
+
+selectKit();
+
+function showHelp() {
+	document.getElementById('helpDetails').style.display = 'block';
+}
+function closeHelp() {
+	document.getElementById('helpDetails').style.display = 'none';
+}
+
+
+</script> 
+
+
+</body>
+</html>
+

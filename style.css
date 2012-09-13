@@ -1,0 +1,232 @@
+body {
+	background: url("background/shattered.png") repeat scroll 0% 0% rgb(8, 14, 36);
+	font-family: Verdana,Helvetica,sans-serif;
+	font-size: 1.5em;
+}
+
+#projectname{
+	position: fixed;
+	height: 86px;
+	top: 5%;
+	width: 96%;
+	left: 2%;
+    font-size: 170%;
+    line-height: 1;
+	color: DarkSlateGray ;
+/*    color: rgb(238, 229, 162); 
+	font-style:italic;
+*/
+    text-shadow: 2px 2px PapayaWhip;
+	font-weight: 700;
+	text-align: center;
+	background-color: rgba(200, 200, 200, 10);
+	background-image: url("header.png");
+	background-repeat: no-repeat;
+	background-position: top; 
+	border:0px solid black;
+	border-radius:25px;
+	box-shadow: 2px 2px 2px #888888;
+}
+
+#button_tempo {
+	position:fixed;
+	bottom:8%;
+	left:2%;
+}
+#button_record {
+	position:fixed;
+	bottom:8%;
+	left:35%;
+}
+#button_clear {
+	position:fixed;
+	bottom:8%;
+	left:68%;
+}
+
+#selectKit{
+	position:fixed;
+	padding-top:15px;
+	padding-bottom:15px;
+	padding-left:15px;
+	padding-right:15px;
+	top:50%;
+	left:5%;
+	background-color: AntiqueWhite;
+	border: 3px solid;
+	border-radius:25px;
+	box-shadow: 5px 5px 5px #888888;
+}
+
+.beat_button {
+	position: fixed;
+	top: 73%;
+	background-color: lightblue;
+	height: 50px;
+	border:2px solid;
+	border-radius:25px;
+	box-shadow: 5px 5px 5px #888888;
+	text-align: center;
+	cursor:pointer;
+}
+.beat_button div { vertical-align: middle; line-height: 50px;}
+#tempoSetter{
+	width: 150px;
+	left: 2%;
+}
+#tempoMult{
+	width: 50px;
+	left: 18%;
+	width:5%;
+}
+#tempoDiv{
+	width: 50px;
+	left: 27%;
+	width:5%;
+}
+/*.subbeat { vertical-align: middle; line-height: 40px; font-size: 1em;}*/
+
+
+.state_button {
+	background-color: lightgreen;
+	height: 50px;
+	width: 30%;
+	border: 3px solid;
+	border-radius:25px;
+	box-shadow: 5px 5px 5px #888888;
+	text-align: center;
+	cursor:pointer;
+}
+
+.helpButton {
+	position: fixed;
+	top: 70%;
+	right: 2%;
+	border: 3px solid;
+	border-radius:25px;
+	box-shadow: 5px 5px 5px #888888;
+	font:0.8em arial,sans-serif;
+	background-color: Thistle;
+	padding: 5px 5px 5px 5px;
+	width:70px;
+	text-align: center;
+	cursor:pointer;
+}
+
+#helpDetails {
+	top: 10%;
+	left: 25%;
+	width: 50%;
+	visibility: visible; 
+	display:none;
+	z-index: 100;
+	padding:10px;
+}
+
+
+
+.step_button {
+	position: fixed;
+	top: 20%;
+	background-color: lightgray;
+	height: 5%;
+	width: 4%;
+	border: 3px dotted;
+	border-radius:5px;
+	box-shadow: 2px 2px 2px #888888;
+	text-align: center;
+}
+
+.step_button_em {
+	border: 3px solid;
+}
+
+#step_0{left: 5%;}
+#step_1{left: 10%;}
+#step_2{left: 15%;}
+#step_3{left: 20%;}
+#step_4{left: 25%;}
+#step_5{left: 30%;}
+#step_6{left: 35%;}
+#step_7{left: 40%;}
+#step_8{left: 45%;}
+#step_9{left: 50%;}
+#step_10{left: 55%;}
+#step_11{left: 60%;}
+#step_12{left: 65%;}
+#step_13{left: 70%;}
+#step_14{left: 75%;}
+#step_15{left: 80%;}
+
+.state_button :hover{
+	font-weight: 700;
+/*	border:2px solid green;
+	border-radius:23px;
+	height: 46px;*/
+}
+
+.state_button  .button_text {
+	vertical-align: middle;
+	line-height: 50px;
+	font-family: Verdana,Helvetica,sans-serif;
+	font-size: 1.5em;
+}
+
+#footer{
+	font-size: 0.5em;
+	position:fixed;
+	bottom:2%;
+	width: 100%;
+	text-align: center;
+}
+#footer a{
+	text-decoration: none;
+	color: darkblue;
+	font-style: italic;
+}
+
+
+
+/* ***************************************** */
+/* Triangle trick */
+
+#play_button_container{
+	width: 40%;
+	height: 50%;
+	top: 30%;
+	position: fixed;
+	left: 30%;
+}
+
+#play_button_container table {
+	width: 100%;
+	height: 100%;
+}
+
+.play_button {
+	width: 0; 
+	height: 0; 
+	cursor: pointer;
+	border: 50px solid lightgray;
+}
+
+#play-up {
+	border-top: 0px solid lightgray;
+	border-bottom: 80px solid #40A140;
+}
+
+#play-down {
+	border-bottom: 0px solid transparent;
+	border-top: 80px solid #40A140;
+}
+
+#play-right {
+	border-left: 80px solid #40A140;
+	border-right: 0px solid transparent;
+}
+
+#play-left {
+	border-right: 80px solid #40A140;
+	border-left:0px solid transparent; 
+}
+
