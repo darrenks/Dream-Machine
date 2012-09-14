@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Accelerometer Javascript Test</title>
+<meta name=viewport content="width=device-width,user-scalable=yes"/>
+</head>
+<body>
+<div id=content>
+Hold phone up facing you, swing left right forward or back
+<ul>
+<li>acceleration x: <span id=accelerationX></span>g</li>
+<li>acceleration y: <span id=accelerationY></span>g</li>
+<li>acceleration z: <span id=accelerationZ></span>g</li>
+<li>rotation alpha: <span id=rotationAlpha></span>degree</li>
+<li>rotation beta: <span id=rotationBeta></span>degree</li>
+<li>rotation gamma: <span id=rotationGamma></span>degree</li>
+<li>Last Gesture: <span id=gesture></span></li>
+<li>x: <span id=X></span></li>
+<li>y: <span id=Y></span></li>
+<li>z: <span id=Z></span></li>
+</ul>
+</div>
+<script type="text/javascript">
+// rotate clock/counterclockwise
+// shake
+// tilt left/right/up/down
+// move left/right/up/down
+// 
+// swing (how hard=volume)
+// 
+// hit solid surface
+// 
+// friday at 6 meet, have some gestures recognized
+
+last_event=null;
+last_time=(new Date()).getTime();
+x=0;
+y=0;
+z=0;
+
+if(window.DeviceMotionEvent!=undefined){
+	window.ondevicemotion=function(e){
+		last_event=e;
+		
+		t=(new Date()).getTime();
+		
+		accel=last_event.accelerationIncludingGravity;
+		lowpass=10*(t-last_time)/1000;
+		if(lowpass>1) lowpass=1;
+		if(lowpass<0) lowpass=0;
+		
+//	document.getElementById("gesture").innerHTML=last_time-t;
+		last_time=t;
+		x=x*(1-lowpass)+lowpass*accel.x;
+		y=y*(1-lowpass)+lowpass*accel.y;
+		z=z*(1-lowpass)+lowpass*accel.z;
+		
+		mag=Math.sqrt(x*x+(y+10)*(y+10)+z*z);
+		if(mag>15) {
+			direction="0";
+			if(Math.abs(x)>=Math.abs(y) && Math.abs(x)>=Math.abs(z)) {
+				direction=(x>0 ? "right":"left");
+			}
+			if(Math.abs(y)>=Math.abs(x) && Math.abs(y)>=Math.abs(z)) {
+				direction=(y>0 ? "up":"down");
+			}
+			if(Math.abs(z)>=Math.abs(x) && Math.abs(z)>=Math.abs(y)) {
+				direction=(z>0 ? "forwards":"backwards");
+			}
+			document.getElementById("gesture").innerHTML=direction;
+		}
+		
+	}
+}
+
+setInterval(function(){
+	if(!last_event) return;
+	accel=last_event.accelerationIncludingGravity;
+	rotat=last_event.rotationRate;
+	document.getElementById("accelerationX").innerHTML=Math.round(accel.x*1000)/1000;
+	document.getElementById("accelerationY").innerHTML=Math.round(accel.y*1000)/1000;
+	document.getElementById("accelerationZ").innerHTML=Math.round(accel.z*1000)/1000;
+	document.getElementById("X").innerHTML=Math.round(x*1000)/1000;
+	document.getElementById("Y").innerHTML=Math.round(y*1000)/1000;
+	document.getElementById("Z").innerHTML=Math.round(z*1000)/1000;
+	if(rotat){
+		document.getElementById("rotationAlpha").innerHTML=Math.round(rotat.alpha*1000)/1000;
+		document.getElementById("rotationBeta").innerHTML=Math.round(rotat.beta*1000)/1000;
+		document.getElementById("rotationGamma").innerHTML=Math.round(rotat.gamma*1000)/1000;
+	}
+}, 100);
+</script>
+</body>
+</html>
