@@ -111,7 +111,7 @@ body {
 	top: 30%;
 	left: 2%;
 	border: 3px solid;
-	border-radius:25px;
+	border-radius:15px;
 	box-shadow: 5px 5px 5px #888888;
 	font:0.8em arial,sans-serif;
 	background-color: Thistle;
@@ -122,13 +122,17 @@ body {
 }
 
 #helpDetails {
+	padding: 25px 25px 25px 25px;
 	top: 10%;
+	height:80%;
 	left: 25%;
 	width: 50%;
 	visibility: visible; 
 	display:none;
 	z-index: 100;
 	padding:10px;
+	text-align: left;
+	font:0.7em arial,sans-serif; border-size:0px; padding:0px;
 }
 
 
@@ -242,7 +246,7 @@ body {
 
 .note_common {
 	position:fixed;
-	width:15%;
+	width:10%;
 	right:5%;
 	text-align: center;
 	border: 3px solid;

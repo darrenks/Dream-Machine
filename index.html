@@ -73,18 +73,35 @@
 	</select>
 </div>
 
-<div class="note_common" id="note_up" onclick="on_note_up()">Note Up</div>
-<div class="note_common" id="note_cur" onclick="on_note_cur()">Note Current</div>
-<div class="note_common" id="note_down" onclick="on_note_down()">Note Down</div>
+<div class="note_common" id="note_up" onclick="on_note_up()">Note</br>Up</div>
+<div class="note_common" id="note_cur" onclick="on_note_cur()">Note</br>Current</div>
+<div class="note_common" id="note_down" onclick="on_note_down()">Note</br>Down</div>
 
 
-<div class="helpButton" id="helpDetails">
-<b>Looking for help?:</b><br/><br/>
-Setting tempo:<ul>
-<li>Click tempo button</li>
-<li>Either <i>shake your device</i> or <i>click the beat button</i> repeatedly to the desired tempo.</li>
+<div class="helpButton" id="helpDetails"><br/>
+<b>Setting tempo:</b>
+<ul>
+	<li>Click tempo button</li>
+	<li><i>Shake your phone</i> or <i>click beat button</i> repeatedly to desired tempo.</li>
+	<li>The tempo (bpm) will be shown on button. When satisfied, click the button again to set.</li>
+	<li>...And loop will start playing with a kick drum on the beat.</li>
+	<li>You can double/half the tempo using the GUI buttons.</li>
 </ul>
-<b><a href="#" onclick="closeHelp()"> Got it! </a></b><br/><br/><br/>
+<b>Playing the drums:</b>
+<ul>
+	<li>Select your kit of sounds using the combobox on the left.</li>
+	<li>Shake your phone left/right/up/down to play note highlighted.</li>
+</ul>
+<b>Changing the loop:</b>
+<ul>
+	<li>Click (enable) record button. Whenever you play a drum sound, it will be recorded into the loop and repeated.</li>
+	<li>To clear a drum sound, first shake your device (or click reset button) to enable reset mode, then move your phone to the desired direction mapping to the sound (or click the button of the direction of the sound).</li>
+</ul>
+<b>Playing the piano:</b>
+<ul>
+	<li>Move your phone up/down to play the next note. Or, use the GUI controls.</li>
+</ul>
+<div style="text-align:center"><b><a href="#" onclick="closeHelp()"> Got it! </a></div>
 </div>
 
 <div class="helpButton" onclick="showHelp();"> Help </div>
