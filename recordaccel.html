@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Accelerometer Javascript Test</title>
+<meta name=viewport content="width=device-width,user-scalable=yes"/>
+</head>
+<body>
+<div id=content>
+<ul>
+<li><span id=x></span></li>
+</ul>
+</div>
+<button onclick="save_data()">save data</button>
+<button onclick="clear_data()">clear data</button>
+<span id=mail></span>
+<script type="text/javascript">
+
+x=[];
+y=[];
+z=[];
+t=[];
+
+if(window.DeviceMotionEvent!=undefined){
+	window.ondevicemotion=function(e){
+		accel=e.accelerationIncludingGravity;
+ 		x.push(accel.x);
+ 		y.push(accel.y);
+ 		z.push(accel.z);
+ 		t.push((new Date()).getTime());
+	}
+}
+
+function save_data() {
+	document.body.innerHTML="x=["+x+"]; y=["+y+"]; z=["+z+"]; t=["+t+"];";
+}
+
+function clear_data() {
+	x=[];
+	y=[];
+	z=[];
+	t=[];
+}
+</script>
+</body>
+</html>
