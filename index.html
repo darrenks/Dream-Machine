@@ -9,10 +9,28 @@
 
 <body>
 
-<div id="projectname"></div>
+<div id="myheader">
+	<div id="projectname"></div>
+</div>
+	<div class="step_button step_button_em" id="step_0">1</div>
+	<div class="step_button" id="step_1">2</div>
+	<div class="step_button" id="step_2">3</div>
+	<div class="step_button" id="step_3">4</div>
+	<div class="step_button step_button_em" id="step_4">5</div>
+	<div class="step_button" id="step_5">6</div>
+	<div class="step_button" id="step_6">7</div>
+	<div class="step_button" id="step_7">8</div>
+	<div class="step_button step_button_em" id="step_8">9</div>
+	<div class="step_button" id="step_9">10</div>
+	<div class="step_button" id="step_10">11</div>
+	<div class="step_button" id="step_11">12</div>
+	<div class="step_button step_button_em" id="step_12">13</div>
+	<div class="step_button" id="step_13">14</div>
+	<div class="step_button" id="step_14">15</div>
+	<div class="step_button" id="step_15">16</div>
 
 <div id="play_button_container">
-	<table style="font:0.8em arial,sans-serif; border-size:0px; padding:0px;">
+	<table style="font:1.2em arial,sans-serif; border-size:0px; padding:0px;">
 		<tr>
 			<td></td><td></td>
 			<td id="instr_name_up" style="vertical-align: bottom; text-align:center;"></td>
@@ -26,10 +44,10 @@
 			</tr>
 		<tr>
 			<td id="instr_name_left" style="text-align:right;">.</td>
-			<td style="text-align:right; height:50px; width:80px;">
+			<td style="text-align:right; height:60px; width:80px;">
 				<div class="play_button" id="play-left" onclick="on_playSound('right')"></div></td>
-			<td style="width:50px; height:50px; background-color:lightgray;"></td>
-			<td style="text-align:left; height:50px; width:80px;">
+			<td style="width:60px; height:60px; background-color:lightgray;"></td>
+			<td style="text-align:left; height:60px; width:80px;">
 				<div class="play_button" id="play-right" onclick="on_playSound('left')"></div></td>
 			<td id="instr_name_right"></td>
 			</tr>
@@ -55,15 +73,17 @@
 	</select>
 </div>
 
+<div class="note_common" id="note_up" onclick="on_note_up()">Note Up</div>
+<div class="note_common" id="note_cur" onclick="on_note_cur()">Note Current</div>
+<div class="note_common" id="note_down" onclick="on_note_down()">Note Down</div>
+
+
 <div class="helpButton" id="helpDetails">
 <b>Looking for help?:</b><br/><br/>
-
 Setting tempo:<ul>
 <li>Click tempo button</li>
 <li>Either <i>shake your device</i> or <i>click the beat button</i> repeatedly to the desired tempo.</li>
 </ul>
-
-</pre>
 <b><a href="#" onclick="closeHelp()"> Got it! </a></b><br/><br/><br/>
 </div>
 
@@ -73,27 +93,9 @@ Setting tempo:<ul>
 	<div class="button_text" id="tempo_text"> Tempo </div>
 </div>
 
-<div class="step_button step_button_em" id="step_0">1</div>
-<div class="step_button" id="step_1">2</div>
-<div class="step_button" id="step_2">3</div>
-<div class="step_button" id="step_3">4</div>
-<div class="step_button step_button_em" id="step_4">5</div>
-<div class="step_button" id="step_5">6</div>
-<div class="step_button" id="step_6">7</div>
-<div class="step_button" id="step_7">8</div>
-<div class="step_button step_button_em" id="step_8">9</div>
-<div class="step_button" id="step_9">10</div>
-<div class="step_button" id="step_10">11</div>
-<div class="step_button" id="step_11">12</div>
-<div class="step_button step_button_em" id="step_12">13</div>
-<div class="step_button" id="step_13">14</div>
-<div class="step_button" id="step_14">15</div>
-<div class="step_button" id="step_15">16</div>
-
 <div class="state_button" id="button_record" onclick="recordClick()">
 	<div class="button_text"> Record </div>
 </div>
-
 
 <div class="state_button" id="button_clear" onclick="resetClick()">
 	<div class="button_text"> Reset </div>
@@ -108,7 +110,7 @@ Setting tempo:<ul>
 
 
 <div id="footer">
-	Dream Machine (<a href="http://www.youtube.com/watch?v=VdAgj34G4tg">*</a>) is a mobile HTML5 / Javascript / CSS3 experiment for devices supporting accelerometer and audio. Built by Darren and Adil. Hosted on <a href="https://github.com/darrenks/Dream-Machine">github</a>.
+	Dream Machine (<a href="http://www.youtube.com/watch?v=VdAgj34G4tg">*</a>) is a mobile HTML5 / Javascript / CSS3 experiment for devices supporting accelerometer and audio standards nicely (currently: none). Built by Darren and <a href="http://adilyalcin.me">Adil</a>. Hosted on <a href="https://github.com/darrenks/Dream-Machine">github</a>.
 	For <a href="http://cmsc838f-f12.wikispaces.com/"> more</a>.
 <!-- Works best on XX browser on XX device. Drum set courtesy of http://www.freesound.org/people/billengholm@yahoo.com/packs/5966/ -->
 </div>
@@ -121,6 +123,8 @@ var lastClick = 0;
 
 // program state
 var readTempo = false;
+var recordMode = false;
+var resetMode = false;
 
 // bpm and basic beat management
 var bpm = 0;
@@ -130,73 +134,88 @@ var curStep = 0;
 
 var soundMapping = new Array();
 
-// recorded instruments
-var instr = new Array();
-instr["kickdrum1"] = new Array();
-instr["kickdrum1"][0] = 1;
-instr["kickdrum1"][4] = 1;
-instr["kickdrum1"][8] = 1;
-instr["kickdrum1"][12] = 1;
-instr["openhihat"] = new Array();
-instr["openhihat"][14] = 1;
-instr["closedhihat"] = new Array();
-instr["closedhihat"][0] = 1;
-instr["closedhihat"][2] = 1;
-instr["closedhihat"][4] = 1;
-instr["closedhihat"][6] = 1;
-instr["closedhihat"][8] = 1;
-instr["closedhihat"][10] = 1;
-instr["closedhihat"][12] = 1;
-
-var clips = new Array();
-
 var supportOgg = new Audio().canPlayType("audio/ogg");
 var supportMp3 = new Audio().canPlayType("audio/mpeg");
 
-function addClip(clipname){
-	clips[clipname] = new Audio();
-//	clips[clipname].preload = "none";
-	if(supportOgg) clips[clipname].src = "kit1/"+clipname+".ogg";
-	else if(supportMp3) clips[clipname].src = "kit1/"+clipname+".mp3";
+
+var instrList = [
+	"kickdrum1", "openhihat", "closedhihat", "cowbell", 
+	"lowconga", "openhighconga", "mutecuica", "opencuica" ];
+
+// recorded instruments
+var loop = new Array();	
+for(i=0; i<8 ; i++){
+	loop[instrList[i]] = new Array();
 }
 
-addClip("kickdrum1");
-addClip("openhihat");
-addClip("closedhihat");
-addClip("cowbell");
-addClip("lowconga");
-addClip("openhighconga");
-addClip("mutecuica");
-addClip("opencuica");
+function resetInstr(name){
+	for(i=0 ; i<16 ; i++) loop[name] = 0;
+}
 
-var beatie = false;
+loop["kickdrum1"][0] = 1;
+loop["kickdrum1"][4] = 1;
+loop["kickdrum1"][8] = 1;
+loop["kickdrum1"][12] = 1;
+loop["openhihat"][14] = 1;
+loop["closedhihat"][0] = 1;
+loop["closedhihat"][2] = 1;
+loop["closedhihat"][4] = 1;
+loop["closedhihat"][6] = 1;
+loop["closedhihat"][8] = 1;
+loop["closedhihat"][10] = 1;
+loop["closedhihat"][12] = 1;
+
+
+var clips = new Array();
+
+function addClip(kitname, clipname){
+	clips[clipname] = new Audio();
+//	clips[clipname].preload = "none";
+	if(supportOgg) clips[clipname].src = kitname+"/"+clipname+".ogg";
+	else if(supportMp3) clips[clipname].src = kitname+"/"+clipname+".mp3";
+}
+
+addClip("kit1","kickdrum1");
+addClip("kit1","openhihat");
+addClip("kit1","closedhihat");
+addClip("kit1","cowbell");
+addClip("kit1","lowconga");
+addClip("kit1","openhighconga");
+addClip("kit1","mutecuica");
+addClip("kit1","opencuica");
+addClip("kit1","imflying");
+
+addClip("piano","Piano.mf.A3");
+addClip("piano","Piano.mf.B3");
+addClip("piano","Piano.mf.C3");
+addClip("piano","Piano.mf.D3");
+addClip("piano","Piano.mf.E3");
+addClip("piano","Piano.mf.F3");
+addClip("piano","Piano.mf.G3");
+
 function beatFeed(){
 	document.getElementById("step_"+curStep).style.background = 'lightgray';
+	// advance current step
 	curStep++;
 	if(curStep==16) curStep = 0; // wrap
-	if(curStep%4==0){
-		if(beatie){
-			document.getElementById("tempoSetter").style.background = 'red';
-		} else {
-			document.getElementById("tempoSetter").style.background = 'blue';
-		}
-		beatie = !beatie;
+	
+	// change beat! button color
+	if(curStep==0 || curStep == 8){
+		document.getElementById("tempoSetter").style.background = 'red';
+	} else if(curStep==4 || curStep == 12){
+		document.getElementById("tempoSetter").style.background = 'blue';
 	}
 	document.getElementById("step_"+curStep).style.background = 'darkgray';
-	if(instr["kickdrum1"][curStep]==1){
-		clips["kickdrum1"].play();
-		clips["kickdrum1"].currentTime = 0;
+
+	// play the instruments of this beat
+	for(i=0; i<8 ; i++){
+		var instrName = instrList[i];
+		if(loop[instrName][curStep]==1){
+			clips[instrName].play();
+			clips[instrName].currentTime = 0;
+		}
 	}
-	if(instr["closedhihat"][curStep]==1){
-		clips["openhihat"].pause();
-		clips["closedhihat"].play();
-		clips["closedhihat"].currentTime = 0;
-	}
-	if(instr["openhihat"][curStep]==1){
-		clips["closedhihat"].pause();
-		clips["openhihat"].play();
-		clips["openhihat"].currentTime = 0;
-	}
+	// silence other hihat etc
 }
 
 function updatebpm(newbpm){
@@ -210,7 +229,7 @@ function tempoClick() {
 	if(readTempo){
 		readTempo = false;
 		document.getElementById("button_tempo").style.background = 'lightgreen';
-		beatHandle = setInterval("beatFeed()", bpm_inv/4);
+		if(bpm_inv!=0) beatHandle = setInterval("beatFeed()", bpm_inv/4);
 	} else {
 		readTempo = true;
 		document.getElementById("button_tempo").style.background = 'red';
@@ -219,11 +238,27 @@ function tempoClick() {
 } 
 
 function recordClick() {
+	if(bpm==0){ alert("Please set the tempo first"); return;	 }
+	if(recordMode){
+		recordMode = false;
+		document.getElementById("button_record").style.background = 'lightgreen';
+	} else {
+		recordMode = true;
+		document.getElementById("button_record").style.background = 'red';
+		lastClick = 0;
+	}
 } 
 
 function resetClick() {
-	window.clearTimeout(beatHandle);
-	document.getElementById("tempoSetter").style.background = 'lightblue';
+	if(resetMode){
+		resetMode = false;
+		window.clearTimeout(beatHandle);
+		document.getElementById("button_clear").style.background = 'lightgreen';
+		curStep = 0;
+	} else {
+		resetMode = true;
+		document.getElementById("button_clear").style.background = 'red';
+	}
 }
   
 function temmpooo(){
@@ -254,8 +289,36 @@ function tempoDivide(){
 }
 
 function on_playSound(name){
+	if(resetMode){
+		resetInstr(soundMapping[name]);
+		resetMode = false;
+		document.getElementById("button_clear").style.background = 'lightgreen';
+		return;
+	}
 	clips[ soundMapping[name] ].play();
 	clips[ soundMapping[name] ].currentTime = 0;
+	if(recordMode){
+		loop[ soundMapping[name] ][curStep] = 1;
+	}
+}
+
+curNote = 3;
+function on_note_up(){ if(curNote==6) curNote=0; else curNote++; on_note_cur(); }
+function on_note_down(){ if(curNote==0) curNote=6; else curNote--; on_note_cur(); }
+function on_note_cur(){
+	var what;
+	switch(curNote){
+		case 0: what = "Piano.mf.A3"; break;
+		case 1: what = "Piano.mf.B3"; break;
+		case 2: what = "Piano.mf.C3"; break;
+		case 3: what = "Piano.mf.D3"; break;
+		case 4: what = "Piano.mf.E3"; break;
+		case 5: what = "Piano.mf.F3"; break;
+		case 6: what = "Piano.mf.H3"; break;
+		default: break;
+	}
+	clips[ what ].play();
+	clips[ what ].currentTime = 0;
 }
 
 function selectKit(sel){
@@ -263,10 +326,10 @@ function selectKit(sel){
 		soundMapping['left'] = 'closedhihat';
 		soundMapping['right'] = 'openhihat';
 		soundMapping['up'] = 'kickdrum1';
-		soundMapping['down'] = 'cowbell';
+		soundMapping['down'] = 'imflying';
 
-		document.getElementById("instr_name_left").innerHTML = "ClosedHiHat";
-		document.getElementById("instr_name_right").innerHTML = "OpenHiHat";
+		document.getElementById("instr_name_left").innerHTML = "Open<br/> Hi-Hat";
+		document.getElementById("instr_name_right").innerHTML = "Closed<br/> Hi-Hat";
 		document.getElementById("instr_name_up").innerHTML = "Kick";
 		document.getElementById("instr_name_down").innerHTML = "Cowbell";
 	} else {
@@ -275,14 +338,12 @@ function selectKit(sel){
 		soundMapping['up'] = 'lowconga';
 		soundMapping['down'] = 'openhighconga';
 
-		document.getElementById("instr_name_left").innerHTML = "Open Cuica";
-		document.getElementById("instr_name_right").innerHTML = "Mute Cuica";
+		document.getElementById("instr_name_left").innerHTML = "Open<br/> Cuica";
+		document.getElementById("instr_name_right").innerHTML = "Mute<br/>	 Cuica";
 		document.getElementById("instr_name_up").innerHTML = "Low Conga";
 		document.getElementById("instr_name_down").innerHTML = "High Conga";
 	}
 }
-
-selectKit();
 
 function showHelp() {
 	document.getElementById('helpDetails').style.display = 'block';
@@ -291,6 +352,139 @@ function closeHelp() {
 	document.getElementById('helpDetails').style.display = 'none';
 }
 
+selectKit();
+
+
+// **********************************************************************
+// **********************************************************************
+// **********************************************************************
+// **********************************************************************
+// **********************************************************************
+
+
+
+last_time=(new Date()).getTime();
+
+gravityhz=2;
+gravityx=0;
+gravityy=0;
+gravityz=0;
+
+//last 1 second of data
+buflen=1.5;
+xs=[];
+ys=[];
+zs=[];
+ts=[];
+
+free_falling=false;
+last_shake_time=0;
+
+function variance(a) {
+	sum=0;
+	for(i=0; i<a.length; i++) sum+=a[i];
+	mean=sum/a.length;
+	sum=0;
+	for(i=0; i<a.length; i++) sum+=(a[i]-mean)*(a[i]-mean);
+	return sum/a.length;
+}
+
+function meanabs(a) {
+	sum=0;
+	for(i=0; i<a.length; i++) sum+=Math.abs(a[i]);
+	return sum/a.length;
+}
+
+function mean(a) {
+	sum=0;
+	for(i=0; i<a.length; i++) sum+=a[i];
+	return sum/a.length;
+}
+
+if(window.DeviceMotionEvent!=undefined){
+	window.ondevicemotion=function(e){
+		t=(new Date()).getTime();
+		delta_t=t-last_time;
+		last_time=t;
+		accel=e.accelerationIncludingGravity;
+		x=accel.x;
+		y=accel.y;
+		z=accel.z;
+		mag=Math.sqrt(x*x+y*y+z*z);
+
+		lowpass=gravityhz*delta_t/1000;		
+		if(lowpass>1) lowpass=1;
+		if(lowpass<0) lowpass=0;
+		
+		//update gravity
+		gravityx=gravityx*(1-lowpass)+lowpass*accel.x;
+		gravityy=gravityy*(1-lowpass)+lowpass*accel.y;
+		gravityz=gravityz*(1-lowpass)+lowpass*accel.z;
+		
+		//update buffer
+		xs.push(x);
+		ys.push(y);
+		zs.push(z);
+		ts.push(t);
+		while(t-ts[0]>1000*buflen) {
+			xs.shift(); ys.shift(); zs.shift(); ts.shift();
+		}
+		
+		//document.getElementById("debug").innerHTML=gravityx+"<br>"+gravityy+"<br>"+gravityz;
+		//document.getElementById("debug").innerHTML=xs.length;
+
+		//detect free fall if mag<0.1 for >0.3 seconds
+		for(i=ts.length-1; i>=0; i--) {
+			tmag=Math.sqrt(xs[i]*xs[i]+ys[i]*ys[i]+zs[i]*zs[i]);
+//			document.getElementById("debug").innerHTML=tmag;
+			if(tmag>3 || free_falling) break;
+			if(t-ts[i]>0.2*1000) {
+				free_falling=true;
+				gesture("start free fall");
+				break;
+			}
+		}
+		
+		//detect free fall stop if free falling and mag>10
+		if(free_falling && mag>10) {
+			free_falling=false;
+			gesture("stop free fall");
+		}
+		
+		//detect swing if ...
+		
+		//detect shake if stdev of buffer > constant
+		if(meanabs(xs)-mean(xs)>7) {
+			if(t-last_shake_time>500) {
+				gesture('shake');
+			}
+			last_shake_time=t;
+		}
+		
+		
+		//detect move up down when acceleration when move up at least x feet (based on double integral of gravity force) in less than y seconds
+
+		//detect orientation change if last x seconds avg pull angle with gravity > const and no strong magnitudes
+		
+		
+
+//		if(gravitymag<3) {
+//			document.getElementById("content").innerHTML="free fall";
+//		}
+		
+	}
+}
+
+gestures=[];
+function gesture(str) {
+//	alert('gesture: ' + str);
+	if(str=='shake'){
+		on_playSound('left');
+	}
+	if(str=='start free fall'){
+		on_playSound('down');
+	}
+}
 
 </script> 
 

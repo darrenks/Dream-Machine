@@ -4,10 +4,17 @@ body {
 	font-size: 1.5em;
 }
 
+#myheader{
+	top: 2%;
+	width: 96%;
+	height: 100px;
+}
+
+
 #projectname{
 	position: fixed;
 	height: 86px;
-	top: 5%;
+	top: 10px;
 	width: 96%;
 	left: 2%;
     font-size: 170%;
@@ -50,8 +57,9 @@ body {
 	padding-bottom:15px;
 	padding-left:15px;
 	padding-right:15px;
-	top:50%;
-	left:5%;
+	top:45%;
+	left:2%;
+	width: 150px;
 	background-color: AntiqueWhite;
 	border: 3px solid;
 	border-radius:25px;
@@ -100,15 +108,15 @@ body {
 
 .helpButton {
 	position: fixed;
-	top: 70%;
-	right: 2%;
+	top: 30%;
+	left: 2%;
 	border: 3px solid;
 	border-radius:25px;
 	box-shadow: 5px 5px 5px #888888;
 	font:0.8em arial,sans-serif;
 	background-color: Thistle;
 	padding: 5px 5px 5px 5px;
-	width:70px;
+	width:100px;
 	text-align: center;
 	cursor:pointer;
 }
@@ -126,10 +134,9 @@ body {
 
 
 .step_button {
-	position: fixed;
-	top: 20%;
+	position: absolute;
 	background-color: lightgray;
-	height: 5%;
+	height: 4%;
 	width: 4%;
 	border: 3px dotted;
 	border-radius:5px;
@@ -141,22 +148,22 @@ body {
 	border: 3px solid;
 }
 
-#step_0{left: 5%;}
-#step_1{left: 10%;}
+#step_0{left: 3%;}
+#step_1{left: 9%;}
 #step_2{left: 15%;}
-#step_3{left: 20%;}
-#step_4{left: 25%;}
-#step_5{left: 30%;}
-#step_6{left: 35%;}
-#step_7{left: 40%;}
-#step_8{left: 45%;}
-#step_9{left: 50%;}
-#step_10{left: 55%;}
-#step_11{left: 60%;}
-#step_12{left: 65%;}
-#step_13{left: 70%;}
-#step_14{left: 75%;}
-#step_15{left: 80%;}
+#step_3{left: 21%;}
+#step_4{left: 27%;}
+#step_5{left: 33%;}
+#step_6{left: 39%;}
+#step_7{left: 45%;}
+#step_8{left: 51%;}
+#step_9{left: 57%;}
+#step_10{left: 63%;}
+#step_11{left: 69%;}
+#step_12{left: 75%;}
+#step_13{left: 81%;}
+#step_14{left: 87%;}
+#step_15{left: 93%;}
 
 .state_button :hover{
 	font-weight: 700;
@@ -193,7 +200,7 @@ body {
 #play_button_container{
 	width: 40%;
 	height: 50%;
-	top: 30%;
+	top: 24%;
 	position: fixed;
 	left: 30%;
 }
@@ -207,7 +214,7 @@ body {
 	width: 0; 
 	height: 0; 
 	cursor: pointer;
-	border: 50px solid lightgray;
+	border: 70px solid lightgray;
 }
 
 #play-up {
@@ -230,3 +237,25 @@ body {
 	border-left:0px solid transparent; 
 }
 
+/* ************************************************* */
+/* ************************************************* */
+
+.note_common {
+	position:fixed;
+	width:15%;
+	right:5%;
+	text-align: center;
+	border: 3px solid;
+	border-radius:25px;
+	box-shadow: 5px 5px 5px #888888;
+	cursor:pointer;
+}
+#note_up{
+	top:35%;
+}
+#note_cur{
+	top:50%;
+}
+#note_down{
+	top:65%;
+}
